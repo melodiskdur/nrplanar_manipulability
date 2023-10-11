@@ -11,16 +11,11 @@ class NRPlanarPlotter:
         self._robot = robot
         self._fig = plt.figure("NRPlanar Plotter")
         self._ax = self._fig.subplots()
-        # self._sliders = [ plt_widgets.Slider(plt.axes([0.25, 0.02 + 0.03 * i, 0.65, 0.03]), "q"+str(i+1), -np.pi, np.pi, valinit=0.05, valstep=0.1)
-        #                                    for i in range(len(self._robot._joints))]
         self._v_ellipsoid: patches.Patch = None
         self._f_ellipsoid: patches.Patch = None
         self._robot_links: list = []
         self._robot_manip_data: Manipulability.ManipulabilityData
         self._text_plots: list = []
-
-        # for slider in self._sliders:
-        #    slider.on_changed(self.update_plot)
 
         self._ax_labels: list = []
         if self._robot._rotational_axis == 'z':
@@ -97,7 +92,7 @@ class NRPlanarPlotter:
         np_vectors = np.array([ np.array(sym_vector) for sym_vector in v_eigen_vectors])
         angle0 = np.arctan2(float(np_vectors[1, 0]), float(np_vectors[0, 0]))
         angle1 = np.arctan2(float(np_vectors[1, 1]), float(np_vectors[0, 1]))
-        angle = np.degrees(min(angle0, angle1))
+        angle = np.degrees(angle0)
         ellipse_object = patches.Ellipse(center, width=alpha * np_eigen[0], height=alpha * np_eigen[1], angle=angle, fill=False, color=color, label=legend, ls=':')
         return self._ax.add_patch(ellipse_object)
 
